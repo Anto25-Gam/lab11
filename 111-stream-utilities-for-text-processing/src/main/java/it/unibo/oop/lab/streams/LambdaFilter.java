@@ -8,14 +8,9 @@ import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.io.Serial;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,7 +45,7 @@ public final class LambdaFilter extends JFrame {
         IDENTITY("No modifications", Function.identity()),
         LOWER("Convert to lowercase", String::toLowerCase),
         COUNT_CHARS("Count the number of chars", x -> Integer.toString(x.length())),
-        COUNT_LINES("Count the number of lines", x -> Long.toString( x.lines().count())),
+        COUNT_LINES("Count the number of lines", x -> Long.toString(x.lines().count())),
         LIST_WORDS_ORDER(
             "List all the words in alphabetical order", 
             x -> Arrays.stream(x.split("\\s+"))
@@ -60,13 +55,7 @@ public final class LambdaFilter extends JFrame {
         COUNT_EACH_WORD(
             "Write the count for each word", 
             x -> Arrays.stream(x.split("\\s+"))
-                .collect(
-                    Collectors.toMap(
-                        k -> k, 
-                        k -> 1, 
-                        Integer::sum
-                    )
-                )
+                .collect(Collectors.toMap(k -> k, k -> 1 , Integer::sum))
                 .entrySet()
                 .stream()
                 .map(t -> t.getKey() + " -> " + Integer.toString(t.getValue()))
